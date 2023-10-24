@@ -69,6 +69,7 @@ public:
 	afx_msg void On3filter();
 	afx_msg void OnPrewitt();
 	afx_msg void OnSobel();
+	afx_msg void OnRobinson3();
 };
 
 #ifndef _DEBUG  // ExamView.cpp의 디버그 버전

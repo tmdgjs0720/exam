@@ -56,6 +56,7 @@ BEGIN_MESSAGE_MAP(CExamView, CView)
 	ON_COMMAND(IDM_3FILTER, &CExamView::On3filter)
 	ON_COMMAND(IDM_PREWITT, &CExamView::OnPrewitt)
 	ON_COMMAND(IDM_SOBEL, &CExamView::OnSobel)
+	ON_COMMAND(IDM_ROBINSON3, &CExamView::OnRobinson3)
 END_MESSAGE_MAP()
 
 // CExamView 생성/소멸
@@ -788,4 +789,21 @@ void CExamView::OnSobel()
 	pDoc->m_Sobel(height, width, pDoc->m_InImg[0]);
 	Invalidate(FALSE);  //OnDraw()함수 호출			
 
+}
+
+
+void CExamView::OnRobinson3()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CExamDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+
+	pDoc->m_NoInImg = 1;
+	pDoc->m_NoOutImg = 4;
+
+	int height = pDoc->m_SizeY;
+	int width = pDoc->m_SizeX;
+
+	pDoc->m_Robinson3(height, width, pDoc->m_InImg[0]);
+	Invalidate(FALSE);  //OnDraw()함수 호출	
 }

@@ -51,6 +51,7 @@ public:
 	C3filter m_3filterdlg;
 	void m_Prewitt(int height, int width, unsigned char InImg[][256]);
 	void m_Sobel(int height, int width, unsigned char InImg[][256]);
+	void m_Robinson3(int height, int width, unsigned char InImg[][256]);
 
 
 	// 작업입니다.

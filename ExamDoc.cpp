@@ -789,3 +789,63 @@ void CExamDoc::m_Sobel(int height, int width, unsigned char InImg[][256])
 			m_OutImg[2][i][j] = (BYTE)newValue;
 		}
 }
+
+void CExamDoc::m_Robinson3(int height, int width, unsigned char InImg[][256])
+{
+	int Inputval;
+	int i, j;
+	int heightm1 = height - 1;
+	int widthm1 = width - 1;
+	int mr, mc;
+	int newValue, value[8];
+
+	int EastBox[3][3] = { {1, 0, -1}, {1, 0, -1}, {1, 0, -1} };
+	int NorthEastBox[3][3] = { {0, -1, -1}, {1, 0, -1}, {1, 1, 0} };
+	int NorthBox[3][3] = { {-1, -1, -1}, {0, 0, 0}, {1, 1, 1} };
+	int NorthWestBox[3][3] = { {-1, -1, 0}, {-1, 0, 1}, {0, 1, 1} };
+	int WestBox[3][3] = { {-1, 0, 1}, {-1, 0, 1}, {-1, 0, 1} };
+	int SouthWestBox[3][3] = { {0, 1, 1}, {-1, 0, 1}, {-1, -1, 0} };
+	int SouthBox[3][3] = { {1, 1, 1}, {0, 0, 0}, {-1, -1, -1} };
+	int SouthEastBox[3][3] = { {1, 1, 0}, {1, 0, -1}, {0, -1, -1} };
+
+	//결과 이미지 0으로 초기화
+	for (i = 0; i < height; i++)
+		for (j = 0; j < width; j++)
+			m_OutImg[0][i][j] = 0;
+
+	for (i = 1; i < heightm1; i++)
+	{
+		for (j = 1; j < widthm1; j++)
+		{
+			newValue = 0; //0으로 초기화
+			for (mr = 0; mr < 8; mr++)
+				value[mr] = 0;
+
+			for (mr = 0; mr < 3; mr++)
+			{
+				for (mc = 0; mc < 3; mc++)
+				{
+					value[0] += (EastBox[mr][mc] * InImg[i + mr - 1][j + mc - 1]);
+					value[1] += (NorthEastBox[mr][mc] * InImg[i + mr - 1][j + mc - 1]);
+					value[2] += (NorthBox[mr][mc] * InImg[i + mr - 1][j + mc - 1]);
+					value[3] += (NorthWestBox[mr][mc] * InImg[i + mr - 1][j + mc - 1]);
+					value[4] += (WestBox[mr][mc] * InImg[i + mr - 1][j + mc - 1]);
+					value[5] += (SouthWestBox[mr][mc] * InImg[i + mr - 1][j + mc - 1]);
+					value[6] += (SouthBox[mr][mc] * InImg[i + mr - 1][j + mc - 1]);
+					value[7] += (SouthEastBox[mr][mc] * InImg[i + mr - 1][j + mc - 1]);
+				}
+			}
+			for (mr = 0; mr < 8; mr++)
+				if (value[mr] > newValue) newValue = value[mr];
+
+			newValue = newValue < 0 ? 0 : (newValue > 255 ? 255 : newValue);
+			m_OutImg[0][i][j] = (BYTE)newValue;//BYTE값으로 변환
+			value[0] = value[0] < 0 ? 0 : (value[0] > 255 ? 255 : value[0]);
+			m_OutImg[1][i][j] = (BYTE)value[0];//BYTE값으로 변환
+			value[1] = value[1] < 0 ? 0 : (value[1] > 255 ? 255 : value[1]);
+			m_OutImg[2][i][j] = (BYTE)value[1];//BYTE값으로 변환
+			value[2] = value[2] < 0 ? 0 : (value[2] > 255 ? 255 : value[2]);
+			m_OutImg[3][i][j] = (BYTE)value[2];//BYTE값으로 변환
+		}
+	}
+}

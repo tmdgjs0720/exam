@@ -105,13 +105,15 @@
 #define IDM_PREWITT                     32832
 #define ID_32833                        32833
 #define IDM_SOBEL                       32834
+#define ID_32835                        32835
+#define IDM_ROBINSON3                   32836
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        330
-#define _APS_NEXT_COMMAND_VALUE         32835
+#define _APS_NEXT_COMMAND_VALUE         32837
 #define _APS_NEXT_CONTROL_VALUE         1038
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
